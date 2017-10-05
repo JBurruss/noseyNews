@@ -46,22 +46,19 @@ router.get('/scrape', function(req, res) {
 
     
     $('article .inner').each(function(i, element) {
-
         
         var result = {};
-
         
         result.title = $(this).children('header').children('h2').text().trim() + ""; 
-
         
         result.link = 'http://www.echojs.com/' + $(this).children('header').children('h2').children('a').attr('href').trim();
-
         
         result.summary = $(this).children('div').text().trim() + "";     
         
         if(result.title !== "" &&  result.summary !== ""){
           
           if(titlesArray.indexOf(result.title) == -1){
+
             titlesArray.push(result.title);
             
             Article.count({ title: result.title}, function (err, test){
@@ -109,19 +106,16 @@ router.get('/scrape', function(req, res) {
 });
 
 router.post('/add/comment/:id', function (req, res){
-
  
-  var articleId = req.params.id;
-  
+  var articleId = req.params.id;  
   
   var commentAuthor = req.body.name;
-
   
   var commentContent = req.body.comment;
 
- 
   var result = {
     author: commentAuthor,
+    
     content: commentContent
   };
   

@@ -9,6 +9,7 @@ $(document).ready(function(){
     var baseURL = window.location.origin;
 
     var frmName = "form-add-" + articleId;
+    
     var frm = $('#' + frmName);
 
     $.ajax({

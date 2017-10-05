@@ -1,22 +1,15 @@
-// Node Dependencies
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var request = require('request'); 
 var cheerio = require('cheerio');
-
-// Initialize Express for debugging & body parsing
 var app = express();
 
 app.use(bodyParser.urlencoded({
   extended: false
 }))
-
-// Serve Static Content
 app.use(express.static(process.cwd() + '/public'));
-
-// Express-Handlebars
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
@@ -26,25 +19,21 @@ if(process.env.NODE_ENV == 'production'){
   mongoose.connect('mongodb://heroku_9vgmlcbx:ds161584.mlab.com:61584/heroku_9vgmlcbx');
 }
 else{
-  mongoose.connect('mongodb://localhost/news-scraper');
+  mongoose.connect('mongodb://localhost/noseyDB');
 }
 var db = mongoose.connection;
 
-// Show any Mongoose errors
 db.on('error', function(err) {
   console.log('Mongoose Error: ', err);
 });
 
-// Once logged in to the db through mongoose, log a success message
 db.once('open', function() {
   console.log('Mongoose connection successful.');
 });
 
-// Import the Comment and Article models
 var Comment = require('./models/Comment.js');
 var Article = require('./models/Article.js');
 
-// Import Routes/Controller
 var router = require('./controllers/controller.js');
 app.use('/', router);
 
